@@ -7,6 +7,8 @@ var saveFileList=[]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Title.text=GlobalGame.getTraductionById(GlobalGame.TRAD_BUTTON_LOADGAME)
+	$Retour.text=GlobalGame.getTraductionById(GlobalGame.TRAD_BUTTON_RETOUR)
 	
 	$exples.visible=false
 	
