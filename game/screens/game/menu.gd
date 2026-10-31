@@ -42,10 +42,15 @@ func _on_btnEN_button_down():
 	refreshUi()
 	pass # Replace with function body.
 
+func _on_btnPT_button_down():
+	GlobalGame.chooseLang(GlobalGame.PT)
+	refreshUi()
+
 func refreshUi():
 	$VBoxContainer/btnNew.text=GlobalGame.getTraductionById(GlobalGame.TRAD_BUTTON_NEWGAME)
 	$VBoxContainer/btnLoad.text=GlobalGame.getTraductionById(GlobalGame.TRAD_BUTTON_LOADGAME)
 	# la langue active est en surbrillance, l'autre est estompée
 	$lang/btnFR.modulate.a=1.0 if GlobalGame.getLang()==GlobalGame.FR else 0.5
 	$lang/btnEN.modulate.a=1.0 if GlobalGame.getLang()==GlobalGame.EN else 0.5
+	$lang/btnPT.modulate.a=1.0 if GlobalGame.getLang()==GlobalGame.PT else 0.5
 	
