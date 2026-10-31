@@ -168,7 +168,7 @@ func creatureWindowVisible():
 	return $creatureWindow.visible
 
 func refreshCreatureCollection():
-	var container=$creatureWindow/list/creatureList
+	var container=$creatureWindow/list/creatureScroll/creatureList
 	for child in container.get_children():
 		container.remove_child(child)
 		child.queue_free()
