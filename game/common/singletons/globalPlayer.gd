@@ -181,6 +181,29 @@ func setActiveCreature(index_):
 	if index_>=0 and index_<creatures.size():
 		activeCreatureIndex=index_
 
+func damageActiveCreature(amount_):
+	var creature=getActiveCreature()
+	if creature.is_empty():
+		return 0
+	creature["hp"]=max(0,int(creature.get("hp",0))-amount_)
+	creatures[activeCreatureIndex]=creature
+	return int(creature["hp"])
+
+func healActiveCreature(amount_):
+	var creature=getActiveCreature()
+	if creature.is_empty():
+		return 0
+	creature["hp"]=min(int(creature.get("max_hp",1)),int(creature.get("hp",0))+amount_)
+	creatures[activeCreatureIndex]=creature
+	return int(creature["hp"])
+
+func getNextHealthyCreatureIndex():
+	for offset in range(1,creatures.size()+1):
+		var index=(activeCreatureIndex+offset)%creatures.size()
+		if int(creatures[index].get("hp",0))>0:
+			return index
+	return -1
+
 func hasCreature(species_id_):
 	for creature in creatures:
 		if creature.get("species_id","")==species_id_:
