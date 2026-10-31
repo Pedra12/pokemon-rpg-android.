@@ -107,9 +107,9 @@ func getItem(key_):
 			ID.WOOD_SWORD:
 				item.name="Espada de madeira"
 				item.description="Uma espada simples feita de madeira de faia."
-				item.attacks[0].name="Ataque simples"
-				item.attacks[1].name="Ataque avançado"
-				item.attacks[2].name="Ataque flamejante"
+				item.actionList[0].name="Ataque simples"
+				item.actionList[1].name="Ataque avançado"
+				item.actionList[2].name="Ataque flamejante"
 			ID.HEALTH_POTION_10:
 				item.name="Poção de vida"
 				item.description="Uma poção que recupera 10 pontos de vida."
