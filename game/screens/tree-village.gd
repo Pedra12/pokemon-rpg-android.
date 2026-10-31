@@ -47,7 +47,7 @@ func _ready():
 	
 	if GlobalPlayer.hasItem(GlobalItems.ID.NAILS) and GlobalPlayer.hasItem(GlobalItems.ID.HONEY) and GlobalPlayer.hasItem(GlobalItems.ID.BUCKET) :
 		
-		var discussionList=GlobalGame.getTraductionById(GlobalGame.TRAD_TREEVILLAGE_START)
+		var discussionList=GlobalGame.getTraductionById(GlobalGame.TRAD_TREEVILLAGE_END)
 
 		$simpleDialog.addDiscussion(TRAD_ARTISAN,discussionList[0])
 		$simpleDialog.addDiscussion("Gordon",discussionList[1])
