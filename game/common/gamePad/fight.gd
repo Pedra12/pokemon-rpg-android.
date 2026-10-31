@@ -49,8 +49,10 @@ func showActions():
 	_clear()
 	var attackButton=_addButton(_trad(GlobalGame.TRAD_FIGHT_ATTACK), _on_attackButton_pressed)
 	var potionCount=GlobalPlayer.countItem(potionItemId)
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	var creatureFull=activeCreature.is_empty() or int(activeCreature.get("hp",0))>=int(activeCreature.get("max_hp",1))
 	var potionButton=_addButton(_trad(GlobalGame.TRAD_FIGHT_POTION) % potionCount, _on_potionButton_pressed)
-	potionButton.disabled=potionCount==0 or GlobalPlayer.getLife() >= GlobalPlayer.getMaxLife()
+	potionButton.disabled=potionCount==0 or creatureFull
 	var captureCount=GlobalPlayer.countItem(GlobalItems.ID.CAPTURE_ORB)
 	var captureButton=_addButton(_trad(GlobalGame.TRAD_FIGHT_CAPTURE)+" x"+str(captureCount), _on_captureButton_pressed)
 	captureButton.disabled=captureCount==0
