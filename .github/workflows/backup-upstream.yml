@@ -41,9 +41,9 @@ jobs:
           expected=$(wc -l < /tmp/upstream-files.txt)
           actual=$(find original-source \( -type f -o -type l \) | wc -l)
           echo "Verified $expected upstream files; backup contains $actual files including revision note."
-          test -f original-source/UPSTREAM-REVISION.txt
           echo "Upstream commit: 111c7479c907df33363d8e3ca23f39d0f71cb625" > original-source/UPSTREAM-REVISION.txt
           echo "This directory is an untouched working-tree snapshot of the upstream source revision. Do not edit it; make development changes in a separate working copy." >> original-source/UPSTREAM-REVISION.txt
+          test -f original-source/UPSTREAM-REVISION.txt
 
       - name: Commit backup on a dedicated branch
         run: |
