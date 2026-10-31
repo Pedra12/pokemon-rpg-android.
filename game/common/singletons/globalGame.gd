@@ -105,7 +105,160 @@ const TRAD_FIGHT_DEFEAT='fight_defeat'
 const SETTINGS_FILE="user://settings.cfg"
 
 var lang=FR
-var traducoesPT = {TRAD_BUTTON_NEWGAME:'Novo jogo', TRAD_BUTTON_LOADGAME:'Carregar jogo', TRAD_BUTTON_CREATE:'Criar', TRAD_LABEL_NOM:'Nome', TRAD_LABEL_PSEUDO:'Apelido', TRAD_LABEL_PARTIES:'Jogos', TRAD_LABEL_VOTREPSEUDO:'Seu apelido', TRAD_BUTTON_RETOUR:'VOLTAR', TRAD_BUTTON_EFFACER:'APAGAR', TRAD_BUTTON_VALIDER:'CONFIRMAR', TRAD_LABEL_RETOURAUMENU:'VOLTAR AO MENU', TRAD_UI_PAUSE:'Pausa', TRAD_UI_RESUME:'Continuar', TRAD_UI_INVENTORY:'Inventário', TRAD_UI_SAVE:'Salvar', TRAD_UI_SETTINGS:'Configurações', TRAD_UI_QUIT:'Sair', TRAD_UI_QUIT_CONFIRM:'Deseja sair do jogo?', TRAD_UI_QUIT_WARNING:'Lembre-se de salvar!', TRAD_UI_YES:'Sim', TRAD_UI_NO:'Não', TRAD_UI_SAVED:'Jogo salvo', TRAD_UI_TOUCH:'Controles de toque', TRAD_UI_DIALOG_ANIMATION:'Texto animado', TRAD_UI_CLOSE:'Fechar', TRAD_UI_MENU:'Menu', TRAD_UI_SHOP:'Loja', TRAD_UI_EQUIP:'Equipar', TRAD_UI_DISPLAY:'Exibir', TRAD_UI_USE:'Usar', TRAD_UI_BUY:'Comprar', TRAD_UI_OWNED:'Já possui', TRAD_UI_LANGUAGE:'Idioma: Português (Brasil)', TRAD_FIGHT_ATTACK:'Atacar', TRAD_FIGHT_POTION:'Poção x%d', TRAD_FIGHT_FLEE:'Fugir', TRAD_FIGHT_BACK:'Voltar', TRAD_FIGHT_PUNCH:'Soco', TRAD_FIGHT_SPIDER:'Aranha', TRAD_FIGHT_APPEAR:'Uma aranha apareceu!', TRAD_FIGHT_CHOOSE:'O que %s vai fazer?', TRAD_FIGHT_PLAYER_ATTACK:'%s usa %s!', TRAD_FIGHT_CRITICAL:'Golpe crítico!', TRAD_FIGHT_ENEMY_ATTACK:'A aranha atacou!', TRAD_FIGHT_ENEMY_MISS:'A aranha errou o ataque!', TRAD_FIGHT_MISS:'Errou', TRAD_FIGHT_POTION_USED:'%s usou uma poção.', TRAD_FIGHT_FLEE_OK:'Você conseguiu fugir!', TRAD_FIGHT_FLEE_FAIL:'Não foi possível fugir!', TRAD_FIGHT_VICTORY:'Vitória! +%d XP  +%d gemas', TRAD_FIGHT_DEFEAT:'%s está exausto e recuou...', TRAD_WORD_PRESENTATEUR:'Apresentador', TRAD_WORD_APICULTEUR:'Apicultor', TRAD_WORD_VENDEUR:'Vendedor', TRAD_WORD_GORDONMOM:'Mãe do Gordon', TRAD_WORD_ARTISAN:'Artesão', TRAD_WORD_HABITANT:'Morador', TRAD_TREEVILLAGE_STARFOUND:'Uma estrela de Gormon encontrada!'}
+var traducoesPT = {
+	TRAD_BUTTON_NEWGAME:"Novo jogo",
+	TRAD_BUTTON_LOADGAME:"Carregar jogo",
+	TRAD_BUTTON_CREATE:"Criar",
+	TRAD_LABEL_NOM:"Nome",
+	TRAD_LABEL_PSEUDO:"Apelido",
+	TRAD_LABEL_PARTIES:"Partidas",
+	TRAD_LABEL_VOTREPSEUDO:"Seu apelido",
+	TRAD_BUTTON_RETOUR:"VOLTAR",
+	TRAD_BUTTON_EFFACER:"APAGAR",
+	TRAD_BUTTON_VALIDER:"CONFIRMAR",
+	TRAD_LABEL_RETOURAUMENU:"VOLTAR AO MENU",
+	TRAD_UI_PAUSE:"Pausa",
+	TRAD_UI_RESUME:"Continuar",
+	TRAD_UI_INVENTORY:"Inventário",
+	TRAD_UI_SAVE:"Salvar",
+	TRAD_UI_SETTINGS:"Configurações",
+	TRAD_UI_QUIT:"Sair",
+	TRAD_UI_QUIT_CONFIRM:"Deseja sair do jogo?",
+	TRAD_UI_QUIT_WARNING:"Lembre-se de salvar!",
+	TRAD_UI_YES:"Sim",
+	TRAD_UI_NO:"Não",
+	TRAD_UI_SAVED:"Jogo salvo",
+	TRAD_UI_TOUCH:"Controles de toque",
+	TRAD_UI_DIALOG_ANIMATION:"Texto animado",
+	TRAD_UI_CLOSE:"Fechar",
+	TRAD_UI_MENU:"Menu",
+	TRAD_UI_SHOP:"Loja",
+	TRAD_UI_EQUIP:"Equipar",
+	TRAD_UI_DISPLAY:"Exibir",
+	TRAD_UI_USE:"Usar",
+	TRAD_UI_BUY:"Comprar",
+	TRAD_UI_OWNED:"Já possui",
+	TRAD_UI_LANGUAGE:"Idioma: Português (Brasil)",
+	TRAD_FIGHT_ATTACK:"Atacar",
+	TRAD_FIGHT_POTION:"Poção x%d",
+	TRAD_FIGHT_FLEE:"Fugir",
+	TRAD_FIGHT_BACK:"Voltar",
+	TRAD_FIGHT_PUNCH:"Soco",
+	TRAD_FIGHT_SPIDER:"Aranha",
+	TRAD_FIGHT_APPEAR:"Uma aranha apareceu!",
+	TRAD_FIGHT_CHOOSE:"O que %s vai fazer?",
+	TRAD_FIGHT_PLAYER_ATTACK:"%s usa %s!",
+	TRAD_FIGHT_CRITICAL:"Golpe crítico!",
+	TRAD_FIGHT_ENEMY_ATTACK:"A aranha atacou!",
+	TRAD_FIGHT_ENEMY_MISS:"A aranha errou o ataque!",
+	TRAD_FIGHT_MISS:"Errou",
+	TRAD_FIGHT_POTION_USED:"%s usou uma poção.",
+	TRAD_FIGHT_FLEE_OK:"Você conseguiu fugir!",
+	TRAD_FIGHT_FLEE_FAIL:"Não foi possível fugir!",
+	TRAD_FIGHT_VICTORY:"Vitória! +%d XP  +%d gemas",
+	TRAD_FIGHT_DEFEAT:"%s está exausto e recuou...",
+	TRAD_WORD_PRESENTATEUR:"Apresentador",
+	TRAD_WORD_APICULTEUR:"Apicultor",
+	TRAD_WORD_VENDEUR:"Vendedor",
+	TRAD_WORD_GORDONMOM:"Mãe do Gordon",
+	TRAD_WORD_ARTISAN:"Artesão",
+	TRAD_WORD_HABITANT:"Morador",
+	TRAD_TREEVILLAGE_START:[
+		["Olá, Gordon!","Você pode me ajudar a consertar o poço?"],
+		["Olá, senhor.","Sim, claro! Como posso ajudar?"],
+		["Preciso de algo para vedar as pedras,","de pregos para consertar a estrutura de madeira","e de um balde novo."],
+		["Onde posso encontrar essas coisas?"],
+		["Você terá que explorar as vilas ao nosso redor,","mas tome cuidado...","há perigos escondidos nas florestas..."]
+	],
+	TRAD_TREEVILLAGE_PENDING:[
+		["Olá, Gordon!","Você pode me ajudar a consertar o poço?"],
+		["Olá!","Acho que sim, mas ainda faltam alguns objetos...","Preciso de:"],
+		"- pregos",
+		"- mel para vedar as pedras",
+		"- um balde novo"
+	],
+	TRAD_TREEVILLAGE_END:[
+		["Olá, Gordon!","Você conseguiu me ajudar a consertar o poço?"],
+		["Sim! Acho que tenho tudo:","- seus pregos;","- o mel para vedar as pedras;","- e um balde novo. :)"],
+		["Muito obrigado, Gordon!","Agora vou conseguir consertar o poço."]
+	],
+	TRAD_TREEVILLAGE_GEMHOUSE_START:[
+		["Olá, Gordon!","Em que posso ajudar?"],
+		["Olá, senhor.","Quero conseguir gemas para comprar uma espada."],
+		["Existem Estrelas de Gormon enterradas pela nossa vila.","Se você trouxer algumas, vou trocar cada uma por uma gema.","O que acha?"],
+		["Gostei da ideia! Mas como posso encontrá-las?"],
+		["Vou lhe dar um mapa e uma pá."],
+		["Obrigado pelo mapa e pela pá!"]
+	],
+	TRAD_TREEVILLAGE_GEMHOUSE_PENDING:[
+		["Olá, Gordon!","Já encontrou todas as estrelas?"],
+		["Olá, senhor.","Ainda não. Faltam algumas estrelas para encontrar."],
+		["Olá, senhor.","Sim! Encontrei todas.","Aqui estão!"],
+		["Obrigado pelas Estrelas de Gormon.","Aqui estão suas 10 gemas."]
+	],
+	TRAD_TREEVILLAGE_GEMHOUSE_END:[
+		["Olá, Gordon.","Desculpe, mas não tenho mais nenhuma missão para você. ;)"]
+	],
+	TRAD_TREEVILLAGE_SHOP:[
+		["Olá, Gordon!","O que você deseja?"],
+		["Olá, senhor.","Gostaria de comprar um item."],
+		["Vou mostrar os produtos disponíveis.","É só escolher o que deseja."]
+	],
+	TRAD_TREEVILLAGE_GORDONHOME:[
+		["Olá, Gordon."],
+		["Oi, mãe. Como está o papai?"],
+		["Ele ainda não está muito bem...","desde a tempestade que destruiu o poço.","O problema é que, enquanto ele estiver ausente,","ninguém poderá ajudar nosso artesão","a consertar o único poço da vila..."]
+	],
+	TRAD_CRABVILLAGE:[
+		["Olá, jovem desconhecido."],
+		["Olá!","Preciso de alguns pregos","para consertar o nosso poço."],
+		["Você veio ao lugar certo!","Vença os dois desafios.","Eles vão lhe dar uma ficha","que poderá ser trocada","na loja."]
+	],
+	TRAD_CRABVILLAGE_GAME1_ALREADYWON:[
+		"Olá novamente!","Desculpe, mas você já venceu este desafio..."
+	],
+	TRAD_CRABVILLAGE_GAME1_START:[
+		"Olá! Para vencer este jogo,",
+		"você precisa atravessar o rio com",
+		"o caranguejo, a alga e a água-viva.",
+		"Você só pode transportar um de cada vez.",
+		"Mas tome cuidado ao deixá-los sozinhos:",
+		"o caranguejo come a água-viva,",
+		"e a água-viva come a alga."
+	],
+	TRAD_CRABVILLAGE_GAME1_WIN:[
+		"Parabéns! Você venceu o desafio!",
+		"Aqui estão 2 gemas como recompensa."
+	],
+	TRAD_CRABVILLAGE_SHOP:[
+		"Olá!",
+		"Escolha entre os nossos produtos",
+		"aquele que deseja levar."
+	],
+	TRAD_BEARVILLAGE_BEEPLATFORM:[],
+	TRAD_BEARVILLAGE_BEEPLATFORM_START:[
+		"Olá!",
+		"Você pode me ajudar a recuperar o meu mel?",
+		"Vá até a colmeia e traga de volta os meus três baldes."
+	],
+	TRAD_BEARVILLAGE_BEEPLATFORM_WIN:[
+		"Excelente trabalho!",
+		"Muito obrigado pela ajuda!",
+		"Aqui estão 4 gemas como agradecimento."
+	],
+	TRAD_BEARVILLAGE_BEVILROOM_START:[
+		"Olá!",
+		"Você pode me ajudar?",
+		"Há alguns dias, criaturas BeVil estão causando problemas",
+		"e não nos deixam chegar até a colmeia."
+	],
+	TRAD_BEARVILLAGE_BEVILROOM_WIN:[
+		"Parabéns!",
+		"Muito obrigado pela sua ajuda!",
+		"Aqui estão 4 gemas como recompensa."
+	],
+	TRAD_TREEVILLAGE_STARFOUND:"Você encontrou uma Estrela de Gormon!"
+}
 
 var traductionsList={
 
