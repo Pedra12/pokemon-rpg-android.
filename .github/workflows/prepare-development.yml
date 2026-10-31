@@ -1,0 +1,37 @@
+name: Prepare editable game workspace
+
+on:
+  push:
+    branches: [development]
+    paths-ignore:
+      - 'game/**'
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout development branch
+        uses: actions/checkout@v4
+        with:
+          ref: development
+          fetch-depth: 0
+
+      - name: Create editable copy from the verified original backup
+        run: |
+          test -f original-source/project.godot
+          test -f original-source/LICENSE
+          mkdir -p game
+          rsync -a --delete --exclude='UPSTREAM-REVISION.txt' original-source/ game/
+          test -f game/project.godot
+          test -f game/LICENSE
+
+      - name: Commit the separate working copy
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f game
+          git commit -m "Create editable game workspace"
+          git push origin development
