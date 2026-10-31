@@ -32,7 +32,13 @@ func _ready():
 	rng.randomize()
 
 	playerSavedLife=GlobalPlayer.getLife()
-	$lifePlayer.init(HERO_NAME, GlobalPlayer.getLife(), GlobalPlayer.getMaxLife())
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	if activeCreature.is_empty():
+		activeCreature=GlobalCreatures.createCreature("caranguito")
+		GlobalPlayer.addCreature(activeCreature)
+		activeCreature=GlobalPlayer.getActiveCreature()
+	$creature.setCreature(activeCreature)
+	$lifePlayer.init(str(activeCreature.get("name",HERO_NAME)), int(activeCreature.get("hp",1)), int(activeCreature.get("max_hp",1)))
 	$lifeSpider.init(_trad(GlobalGame.TRAD_FIGHT_SPIDER), lifeSpider, SPIDER_MAX_LIFE)
 
 	positionToGoUp=Vector2( GlobalPlayer.getPosition().x,260)
@@ -43,21 +49,27 @@ func _ready():
 	_playerTurn()
 
 func _playerTurn():
-	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CHOOSE) % HERO_NAME)
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	var creatureName=str(activeCreature.get("name",HERO_NAME)) if !activeCreature.is_empty() else HERO_NAME
+	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CHOOSE) % creatureName)
 	$gamepad.showActions()
 
 #--- actions du joueur
 
 func _on_gamepad_attack(attack_):
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	var creatureName=str(activeCreature.get("name",HERO_NAME)) if !activeCreature.is_empty() else HERO_NAME
 	var roll=FightRules.rollDamage(attack_.damage, rng)
-	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_PLAYER_ATTACK) % [HERO_NAME, attack_.name])
-	$player.playAttack(attack_.animation)
-	await $player.attackFinished
+	var multiplier=GlobalCreatures.getTypeMultiplier(str(activeCreature.get("type","")), "Veneno") if !activeCreature.is_empty() else 1.0
+	var damage=max(1,int(round(roll.damage*multiplier)))
+	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_PLAYER_ATTACK) % [creatureName, attack_.name])
+	$creature.playAttack($spider1.position)
+	await $creature.attackFinished
 
-	lifeSpider=max(0, lifeSpider-roll.damage)
+	lifeSpider=max(0, lifeSpider-damage)
 	$spider1.playDamage()
 	_hitEffect($spider1, roll.critical)
-	_popText($spider1, str(roll.damage), COLOR_CRITICAL if roll.critical else COLOR_DAMAGE, roll.critical)
+	_popText($spider1, str(damage), COLOR_CRITICAL if roll.critical else COLOR_DAMAGE, roll.critical)
 	$lifeSpider.updateValue(lifeSpider)
 	if roll.critical:
 		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CRITICAL))
@@ -85,6 +97,7 @@ func _on_gamepad_capture():
 		var creature=GlobalCreatures.createCreature("aranhito",1)
 		GlobalPlayer.addCreature(creature)
 		GlobalPlayer.addXp(2)
+		GlobalPlayer.addCreatureXp(2)
 		$spider1.visible=false
 		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CAPTURED) % creature.name)
 		await _wait(MESSAGE_DELAY*2)
@@ -95,12 +108,16 @@ func _on_gamepad_capture():
 		_enemyTurn()
 
 func _on_gamepad_usePotion():
-	var lifeBefore=GlobalPlayer.getLife()
-	GlobalPlayer.useItem(GlobalItems.ID.HEALTH_POTION_10)
-	var healed=GlobalPlayer.getLife()-lifeBefore
-	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_POTION_USED) % HERO_NAME)
-	_popText($player, "+"+str(healed), COLOR_HEAL)
-	$lifePlayer.updateValue(GlobalPlayer.getLife())
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	if activeCreature.is_empty():
+		_playerTurn()
+		return
+	var lifeBefore=int(activeCreature.get("hp",0))
+	GlobalPlayer.removeItem(GlobalItems.ID.HEALTH_POTION_10)
+	var healed=GlobalPlayer.healActiveCreature(10)-lifeBefore
+	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_POTION_USED) % str(activeCreature.get("name",HERO_NAME)))
+	_popText($creature, "+"+str(healed), COLOR_HEAL)
+	$lifePlayer.updateValue(GlobalPlayer.getActiveCreature().get("hp",0))
 	await _wait(MESSAGE_DELAY)
 	_enemyTurn()
 
@@ -122,22 +139,32 @@ func _enemyTurn():
 	await $spider1.attackFinished
 
 	if !FightRules.rollEnemyHit(rng):
-		_popText($player, _trad(GlobalGame.TRAD_FIGHT_MISS), COLOR_DAMAGE)
+		_popText($creature, _trad(GlobalGame.TRAD_FIGHT_MISS), COLOR_DAMAGE)
 		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_ENEMY_MISS))
 		await _wait(MESSAGE_DELAY)
 		_playerTurn()
 		return
 
 	var roll=FightRules.rollDamage(SPIDER_DAMAGE, rng, false)
-	GlobalPlayer.damage(roll.damage)
-	$player.playDamage()
-	_hitEffect($player, false)
-	_popText($player, str(roll.damage), COLOR_DAMAGE)
-	$lifePlayer.updateValue(GlobalPlayer.getLife())
-	await $player.damageFinished
+	var remainingHp=GlobalPlayer.damageActiveCreature(roll.damage)
+	$creature.playDamage()
+	_hitEffect($creature, false)
+	_popText($creature, str(roll.damage), COLOR_DAMAGE)
+	$lifePlayer.updateValue(remainingHp)
+	await $creature.damageFinished
 
-	if GlobalPlayer.getLife() <= 0:
-		_defeat()
+	if remainingHp <= 0:
+		var nextIndex=GlobalPlayer.getNextHealthyCreatureIndex()
+		if nextIndex>=0:
+			GlobalPlayer.setActiveCreature(nextIndex)
+			var nextCreature=GlobalPlayer.getActiveCreature()
+			$creature.setCreature(nextCreature)
+			$lifePlayer.init(str(nextCreature.get("name","Criatura")),int(nextCreature.get("hp",1)),int(nextCreature.get("max_hp",1)))
+			$gamepad.showMessage(str(nextCreature.get("name","Criatura"))+" entrou na batalha!")
+			await _wait(MESSAGE_DELAY)
+			_playerTurn()
+		else:
+			_defeat()
 	else:
 		_playerTurn()
 
@@ -150,19 +177,24 @@ func _victory():
 
 	var gems=rng.randi_range(VICTORY_GEMS_MIN, VICTORY_GEMS_MAX)
 	GlobalPlayer.addXp(VICTORY_XP)
+	GlobalPlayer.addCreatureXp(VICTORY_XP)
 	GlobalPlayer.addGems(gems)
 	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_VICTORY) % [VICTORY_XP, gems])
 	await _wait(MESSAGE_DELAY*2)
 	_gotoMap(true)
 
 func _defeat():
-	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_DEFEAT) % HERO_NAME)
-	var tween=$player.create_tween()
-	tween.tween_property($player, "modulate:a", 0.0, MESSAGE_DELAY)
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	var creatureName=str(activeCreature.get("name",HERO_NAME)) if !activeCreature.is_empty() else HERO_NAME
+	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_DEFEAT) % creatureName)
+	var tween=$creature.create_tween()
+	tween.tween_property($creature, "modulate:a", 0.0, MESSAGE_DELAY)
 	await _wait(MESSAGE_DELAY*2)
 	# defaite : comme dans la salle des BeVil, on recupere la vie d'avant le combat
 	# et on recule sur la carte
-	GlobalPlayer.setLife(playerSavedLife)
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	if !activeCreature.is_empty() and int(activeCreature.get("hp",0))<=0:
+		GlobalPlayer.healActiveCreature(1)
 	_gotoMap(false)
 
 # victoire : on passe de l'autre cote de la toile ; sinon on recule
