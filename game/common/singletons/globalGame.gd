@@ -728,7 +728,7 @@ var traductionsList={
 			"Congratulations,",
 			"Thanks a lot",
 			"I give to you 4 Gems",
-			"An Abelume decided to join you!"
+			"An Ursolino decided to join you!"
 		],
 
 	},
@@ -760,7 +760,7 @@ var traductionsList={
 			"Congratulations,",
 			"Thanks a lot !",
 			"I give to you 4 Gems",
-			"An Ursolino decided to join you!"
+			"An Abelume decided to join you!"
 		],
 
 	},
