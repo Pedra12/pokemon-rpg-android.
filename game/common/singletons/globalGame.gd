@@ -268,7 +268,8 @@ var traducoesPT = {
 	TRAD_BEARVILLAGE_BEEPLATFORM_WIN:[
 		"Excelente trabalho!",
 		"Muito obrigado pela ajuda!",
-		"Aqui estão 4 gemas como agradecimento."
+		"Aqui estão 4 gemas como agradecimento.",
+		"Um Ursolino decidiu acompanhar você!"
 	],
 	TRAD_BEARVILLAGE_BEVILROOM_START:[
 		"Olá!",
@@ -720,7 +721,8 @@ var traductionsList={
 		FR:[
 			"Bravo,",
 			"Merci beaucoup",
-			"Voila 4 Gems pour te remercier"
+			"Voila 4 Gems pour te remercier",
+			"Un Ursolino a décidé de vous accompagner !"
 		],
 		EN:[
 			"Congratulations,",
@@ -757,7 +759,8 @@ var traductionsList={
 		EN:[
 			"Congratulations,",
 			"Thanks a lot !",
-			"I give to you 4 Gems"
+			"I give to you 4 Gems",
+			"An Ursolino decided to join you!"
 		],
 
 	},
