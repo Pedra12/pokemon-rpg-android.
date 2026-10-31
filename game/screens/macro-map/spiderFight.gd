@@ -56,7 +56,8 @@ func _playerTurn():
 func _on_gamepad_attack(attack_):
 	var activeCreature=GlobalPlayer.getActiveCreature()
 	var creatureName=str(activeCreature.get("name",HERO_NAME)) if !activeCreature.is_empty() else HERO_NAME
-	var roll=FightRules.rollDamage(attack_.damage, rng)
+	var attackBonus=int(activeCreature.get("attack",0))/3 if !activeCreature.is_empty() else 0
+	var roll=FightRules.rollDamage(attack_.damage+attackBonus, rng)
 	var multiplier=GlobalCreatures.getTypeMultiplier(str(activeCreature.get("type","")), "Veneno") if !activeCreature.is_empty() else 1.0
 	var damage=max(1,int(round(roll.damage*multiplier)))
 	$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_PLAYER_ATTACK) % [creatureName, attack_.name])
@@ -146,7 +147,11 @@ func _enemyTurn():
 		_playerTurn()
 		return
 
-	var roll=FightRules.rollDamage(SPIDER_DAMAGE, rng, false)
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	var defense=int(activeCreature.get("defense",0)) if !activeCreature.is_empty() else 0
+	var enemyMultiplier=GlobalCreatures.getTypeMultiplier("Veneno",str(activeCreature.get("type",""))) if !activeCreature.is_empty() else 1.0
+	var incomingDamage=SPIDER_DAMAGE*enemyMultiplier*10.0/(10.0+defense)
+	var roll=FightRules.rollDamage(incomingDamage, rng, false)
 	var remainingHp=GlobalPlayer.damageActiveCreature(roll.damage)
 	$creature.playDamage()
 	_hitEffect($creature, false)
