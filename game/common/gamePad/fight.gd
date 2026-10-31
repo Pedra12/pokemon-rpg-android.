@@ -63,9 +63,15 @@ func showAttacks():
 	$messageBox.visible=false
 	_clear()
 	var first=null
-	var weaponAttackList=GlobalPlayer.getWeaponAttackList()
+	var weaponAttackList=[]
+	var activeCreature=GlobalPlayer.getActiveCreature()
+	if !activeCreature.is_empty():
+		for move in GlobalCreatures.getMoves(str(activeCreature.get("species_id",""))):
+			weaponAttackList.append(attackClass.new(str(move.name), "", int(move.damage), int(move.xp_min)))
+	else:
+		weaponAttackList=GlobalPlayer.getWeaponAttackList()
 	if weaponAttackList.is_empty():
-		# sans arme, on se defend quand meme a mains nues
+		# sem criatura ou arma: o jogador ainda pode se defender com um soco
 		weaponAttackList=[attackClass.new(_trad(GlobalGame.TRAD_FIGHT_PUNCH), "", PUNCH_DAMAGE, 0)]
 	for attackLoop in weaponAttackList:
 		var button
