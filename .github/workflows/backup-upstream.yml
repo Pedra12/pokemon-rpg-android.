@@ -50,7 +50,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -C backup/little-adventure-111c747
-          git add original-source
+          git add -f original-source
           git commit -m "Back up untouched Little Adventure source 111c747"
           git push --force-with-lease origin backup/little-adventure-111c747
 
