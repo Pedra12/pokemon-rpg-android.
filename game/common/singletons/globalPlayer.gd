@@ -137,10 +137,14 @@ func useItem(itemId_):
 	if realItem.type==item_class.TYPE.MAGICPOTION:
 		var potionAction=realItem.actionList[0]
 		if potionAction.action=="increaseLife":
-			var newLife=getLife()+potionAction.value
-			if newLife > getMaxLife():
-				newLife=getMaxLife()
-			setLife( newLife )
+			var activeCreature=getActiveCreature()
+			if !activeCreature.is_empty():
+				healActiveCreature(potionAction.value)
+			else:
+				var newLife=getLife()+potionAction.value
+				if newLife > getMaxLife():
+					newLife=getMaxLife()
+				setLife(newLife)
 			removeItem(itemId_)
 
 
