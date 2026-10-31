@@ -10,10 +10,10 @@ func _ready():
 	loadPosition()
 	getPlayer().loadCameraLimits($cameraRef)
 	
-	$simpleDialog.addDiscussion("vendeur",[
-		"Bonjour,",
-		"Choisi parmi nos produits",
-		"Celui de ton choix"
+	$simpleDialog.addDiscussion(GlobalGame.getTraductionById(GlobalGame.TRAD_WORD_VENDEUR),[
+		"Olá!",
+		"Escolha entre os nossos produtos",
+		"aquele que deseja levar."
 		])
 		
 	$shopList.setShopItemList([
