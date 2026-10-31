@@ -84,6 +84,8 @@ func _on_startDialog_discussionFinished():
 func _on_winDialog_discussionFinished():
 	$winDialog.end()
 	GlobalPlayer.addGems(4)
+	if !GlobalPlayer.hasCreature("ursolino"):
+		GlobalPlayer.addCreature(GlobalCreatures.createCreature("ursolino"))
 	goBackToVillage()	
 	
 func goBackToVillage():
