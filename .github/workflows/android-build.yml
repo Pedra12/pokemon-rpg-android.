@@ -1,0 +1,122 @@
+name: Android APK - Little Adventure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout build configuration
+        uses: actions/checkout@v4
+
+      - name: Download the exact upstream game version
+        run: |
+          git clone https://github.com/imikado/dupotLittleAdventure.git upstream
+          git -C upstream checkout 111c7479c907df33363d8e3ca23f39d0f71cb625
+          test -f upstream/project.godot
+          test -f upstream/LICENSE
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
+        run: |
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.1" "cmdline-tools;latest" "ndk;28.1.13356709" "cmake;3.10.2.4988404"
+          yes | sdkmanager --licenses
+
+      - name: Install Godot 4.7.2 and matching export templates
+        uses: chickensoft-games/setup-godot@v2.4.3
+        with:
+          version: 4.7.2
+          use-dotnet: false
+          include-templates: true
+
+      - name: Configure Android export
+        working-directory: upstream
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.config/godot" "$HOME/.android" build
+          cat > "$HOME/.config/godot/editor_settings-4.tres" <<EOF
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          export/android/java_sdk_path = "$JAVA_HOME"
+          EOF
+          keytool -genkeypair -v -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          cat > export_presets.cfg <<'EOF'
+          [preset.0]
+          name="Android"
+          platform="Android"
+          runnable=true
+          advanced_options=false
+          dedicated_server=false
+          custom_features=""
+          export_filter="all_resources"
+          include_filter=""
+          exclude_filter=""
+          export_path="build/LittleAdventure.apk"
+          patches=PackedStringArray()
+          encryption_include_filters=""
+          encryption_exclude_filters=""
+          seed=0
+          encrypt_pck=false
+          encrypt_directory=false
+          script_export_mode=2
+
+          [preset.0.options]
+          custom_template/debug=""
+          custom_template/release=""
+          gradle_build/use_gradle_build=false
+          architectures/armeabi-v7a=false
+          architectures/arm64-v8a=true
+          architectures/x86=false
+          architectures/x86_64=false
+          keystore/debug="$HOME/.android/debug.keystore"
+          keystore/debug_user="androiddebugkey"
+          keystore/debug_password="android"
+          keystore/release=""
+          keystore/release_user=""
+          keystore/release_password=""
+          version/code=1
+          version/name="1.0.0"
+          package/unique_name="org.dupot.littleadventure"
+          package/name="Little Adventure"
+          package/signed=true
+          screen/immersive_mode=true
+          screen/orientation=1
+          EOF
+
+      - name: Import and validate original project
+        working-directory: upstream
+        run: |
+          godot --version
+          godot --headless --editor --path . --import --quit
+          godot --headless --path . --editor --quit
+
+      - name: Export Android APK
+        working-directory: upstream
+        run: |
+          godot --headless --path . --export-debug "Android" build/LittleAdventure.apk
+          test -s build/LittleAdventure.apk
+          sha256sum build/LittleAdventure.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: LittleAdventure-Android-APK
+          path: upstream/build/LittleAdventure.apk
+          if-no-files-found: error
+          retention-days: 14
