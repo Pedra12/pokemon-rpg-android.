@@ -910,5 +910,11 @@ func loadFile(file_):
 		
 	saveFile.close()
 
+	# Migração de saves antigos para o sistema de criaturas
+	if GlobalPlayer.getCreatureList().is_empty():
+		GlobalPlayer.addCreature(GlobalCreatures.createCreature("caranguito"))
+		for i in range(3):
+			GlobalPlayer.addItemEvenIfExist(GlobalItems.ID.CAPTURE_ORB)
+
 
 	
