@@ -154,7 +154,6 @@ func _enemyTurn():
 	var roll=FightRules.rollDamage(incomingDamage, rng, false)
 	var remainingHp=GlobalPlayer.damageActiveCreature(roll.damage)
 	$creature.playDamage()
-	_hitEffect($creature, false)
 	_popText($creature, str(roll.damage), COLOR_DAMAGE)
 	$lifePlayer.updateValue(remainingHp)
 	await $creature.damageFinished
