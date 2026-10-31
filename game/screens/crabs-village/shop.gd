@@ -14,7 +14,8 @@ func _ready():
 		
 	$shopList.setShopItemList([
 		shopItemClass.new(GlobalItems.ID.NAILS,6),
-		shopItemClass.new(GlobalItems.ID.HEALTH_POTION_10,50)
+		shopItemClass.new(GlobalItems.ID.HEALTH_POTION_10,50),
+		shopItemClass.new(GlobalItems.ID.CAPTURE_ORB,25)
 		])
 	
 	
