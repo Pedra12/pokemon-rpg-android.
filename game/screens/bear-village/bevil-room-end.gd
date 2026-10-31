@@ -2,6 +2,8 @@ extends "res://common/class/scene.gd"
 
 
 func _ready():
+	if !GlobalPlayer.hasCreature("abelume"):
+		GlobalPlayer.addCreature(GlobalCreatures.createCreature("abelume"))
 
 	$winRect/winDialog.addDiscussion( GlobalGame.getTraductionById(GlobalGame.TRAD_WORD_APICULTEUR),GlobalGame.getTraductionById(GlobalGame.TRAD_BEARVILLAGE_BEVILROOM_WIN))
 	win()
