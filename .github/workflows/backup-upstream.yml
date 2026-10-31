@@ -34,9 +34,14 @@ jobs:
           test -f original-source/LICENSE
           test -f original-source/README.md
           test -f original-source/export/AndroidFireTv/androidFireTv.apk
-          expected=$(git -C upstream ls-tree -r --name-only 111c7479c907df33363d8e3ca23f39d0f71cb625 | wc -l)
-          actual=$(find original-source -type f -o -type l | wc -l)
-          test "$actual" -eq "$((expected + 1))"
+          git -C upstream ls-tree -r --name-only 111c7479c907df33363d8e3ca23f39d0f71cb625 > /tmp/upstream-files.txt
+          while IFS= read -r path; do
+            test -e "original-source/$path" || { echo "Missing upstream file: $path"; exit 1; }
+          done < /tmp/upstream-files.txt
+          expected=$(wc -l < /tmp/upstream-files.txt)
+          actual=$(find original-source \( -type f -o -type l \) | wc -l)
+          echo "Verified $expected upstream files; backup contains $actual files including revision note."
+          test -f original-source/UPSTREAM-REVISION.txt
           echo "Upstream commit: 111c7479c907df33363d8e3ca23f39d0f71cb625" > original-source/UPSTREAM-REVISION.txt
           echo "This directory is an untouched working-tree snapshot of the upstream source revision. Do not edit it; make development changes in a separate working copy." >> original-source/UPSTREAM-REVISION.txt
 
