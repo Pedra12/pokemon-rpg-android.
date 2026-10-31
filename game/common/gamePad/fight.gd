@@ -6,6 +6,7 @@ extends CanvasLayer
 signal leave
 signal attack(attack_)
 signal usePotion
+signal capture
 
 const attackClass=preload("res://common/class/item/attack_class.gd")
 const PUNCH_DAMAGE=4
@@ -50,6 +51,9 @@ func showActions():
 	var potionCount=GlobalPlayer.countItem(potionItemId)
 	var potionButton=_addButton(_trad(GlobalGame.TRAD_FIGHT_POTION) % potionCount, _on_potionButton_pressed)
 	potionButton.disabled=potionCount==0 or GlobalPlayer.getLife() >= GlobalPlayer.getMaxLife()
+	var captureCount=GlobalPlayer.countItem(GlobalItems.ID.CAPTURE_ORB)
+	var captureButton=_addButton(_trad(GlobalGame.TRAD_FIGHT_CAPTURE)+" x"+str(captureCount), _on_captureButton_pressed)
+	captureButton.disabled=captureCount==0
 	_addButton(_trad(GlobalGame.TRAD_FIGHT_FLEE), _on_leaveButton_pressed)
 	_open(attackButton)
 
@@ -113,6 +117,10 @@ func _on_attackButton_pressed():
 func _on_potionButton_pressed():
 	hideWindow()
 	emit_signal("usePotion")
+
+func _on_captureButton_pressed():
+	hideWindow()
+	emit_signal("capture")
 
 func _on_attack_pressed(attack_):
 	hideWindow()
