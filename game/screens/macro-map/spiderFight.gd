@@ -68,6 +68,32 @@ func _on_gamepad_attack(attack_):
 	else:
 		_enemyTurn()
 
+func _on_gamepad_capture():
+	if GlobalPlayer.countItem(GlobalItems.ID.CAPTURE_ORB)<=0:
+		_playerTurn()
+		return
+	if lifeSpider > SPIDER_MAX_LIFE*0.5:
+		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CAPTURE_WEAK))
+		await _wait(MESSAGE_DELAY)
+		_enemyTurn()
+		return
+
+	GlobalPlayer.removeItem(GlobalItems.ID.CAPTURE_ORB)
+	var healthRatio=float(lifeSpider)/float(SPIDER_MAX_LIFE)
+	var captureChance=clampf(0.55+(0.5-healthRatio)*0.7,0.55,0.9)
+	if rng.randf()<=captureChance:
+		var creature=GlobalCreatures.createCreature("aranhito",1)
+		GlobalPlayer.addCreature(creature)
+		GlobalPlayer.addXp(2)
+		$spider1.visible=false
+		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CAPTURED) % creature.name)
+		await _wait(MESSAGE_DELAY*2)
+		_gotoMap(true)
+	else:
+		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CAPTURE_FAILED))
+		await _wait(MESSAGE_DELAY)
+		_enemyTurn()
+
 func _on_gamepad_usePotion():
 	var lifeBefore=GlobalPlayer.getLife()
 	GlobalPlayer.useItem(GlobalItems.ID.HEALTH_POTION_10)
