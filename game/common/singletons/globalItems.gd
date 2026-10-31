@@ -101,7 +101,37 @@ var itemList={
 }
 
 func getItem(key_):
-	return itemList[int(key_)]
+	var item=itemList[int(key_)]
+	if GlobalGame.getLang()==GlobalGame.PT:
+		match int(key_):
+			ID.WOOD_SWORD:
+				item.name="Espada de madeira"
+				item.description="Uma espada simples feita de madeira de faia."
+				item.attacks[0].name="Ataque simples"
+				item.attacks[1].name="Ataque avançado"
+				item.attacks[2].name="Ataque flamejante"
+			ID.HEALTH_POTION_10:
+				item.name="Poção de vida"
+				item.description="Uma poção que recupera 10 pontos de vida."
+			ID.SPADE:
+				item.name="Pá"
+				item.description="Uma pá para cavar."
+			ID.GORMON_STAR_MAP:
+				item.name="Mapa"
+				item.description="Mapa do tesouro das Estrelas de Gormon."
+			ID.GORDMON_STAR:
+				item.name="Estrela"
+				item.description="Estrela de Gormon."
+			ID.NAILS:
+				item.name="Pregos"
+				item.description="Pregos para consertar o poço."
+			ID.HONEY:
+				item.name="Mel"
+				item.description="Mel para consertar o poço."
+			ID.BUCKET:
+				item.name="Balde"
+				item.description="Balde para o poço."
+	return item
 	
 	
 
