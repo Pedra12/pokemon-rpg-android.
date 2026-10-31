@@ -775,6 +775,10 @@ func create(nickname_):
 	var scene='screens/tree-village/gordon-home.tscn'
 	_filename=getNewFilename(nickname_)
 	GlobalPlayer.setNickname(nickname_)
+	if GlobalPlayer.getCreatureList().is_empty():
+		GlobalPlayer.addCreature(GlobalCreatures.createCreature("caranguito"))
+		for i in range(3):
+			GlobalPlayer.addItemEvenIfExist(GlobalItems.ID.CAPTURE_ORB)
 	GlobalPlayer.savePosition(Vector2(48,75))
 	save(scene)
 	loadFile(_filename)
