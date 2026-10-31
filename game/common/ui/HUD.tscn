@@ -281,7 +281,12 @@ theme_type_variation = &"TitleLabel"
 text = "Criaturas"
 horizontal_alignment = 1
 
-[node name="creatureList" type="VBoxContainer" parent="creatureWindow/list"]
+[node name="creatureScroll" type="ScrollContainer" parent="creatureWindow/list"]
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="creatureList" type="VBoxContainer" parent="creatureWindow/list/creatureScroll"]
 layout_mode = 2
 theme_override_constants/separation = 3
 
