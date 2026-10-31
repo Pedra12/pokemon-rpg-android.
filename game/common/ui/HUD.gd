@@ -38,6 +38,7 @@ func _ready():
 	parameters.visible=false
 	$modalBackdrop.visible=false
 	$saved.visible=false
+	$creatureWindow.visible=false
 
 	$inventoryList.setItemList(GlobalPlayer.getItemsList())
 
@@ -48,6 +49,9 @@ func refreshUi():
 	$btnBlock/list/title.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_PAUSE)
 	$btnBlock/list/btnCancell.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_RESUME)
 	$btnBlock/list/btnInventory.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_INVENTORY)
+	$btnBlock/list/btnCreatures.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_CREATURES)
+	$creatureWindow/list/title.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_CREATURES)
+	$creatureWindow/list/closeButton.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_CLOSE)
 	$btnBlock/list/btnSave.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_SAVE)
 	$btnBlock/list/btnParameters.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_SETTINGS)
 	$btnBlock/list/btnQuit.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_QUIT)
@@ -74,7 +78,9 @@ func _unhandled_input(event):
 	# Echap / bouton retour : revient en arriere dans les menus
 	if !event.is_action_pressed("ui_cancel"):
 		return
-	if parameters.visible:
+	if creatureWindowVisible():
+		_on_creatureClose_pressed()
+	elif parameters.visible:
 		_on_saveParameters_button_down()
 	elif confirmation.visible:
 		_on_btnNo_button_down()
@@ -85,7 +91,7 @@ func _unhandled_input(event):
 	get_viewport().set_input_as_handled()
 
 func isMenuOpen():
-	return btnBlock.visible or confirmation.visible or parameters.visible or $inventoryList.getWindow().visible
+	return btnBlock.visible or confirmation.visible or parameters.visible or creatureWindowVisible() or $inventoryList.getWindow().visible
 
 func emitOpenMenu():
 	$modalBackdrop.visible=true
@@ -157,6 +163,43 @@ func openPauseMenu():
 func _on_Button_button_down():
 	openPauseMenu()
 
+
+func creatureWindowVisible():
+	return $creatureWindow.visible
+
+func refreshCreatureCollection():
+	var container=$creatureWindow/list/creatureList
+	for child in container.get_children():
+		container.remove_child(child)
+		child.queue_free()
+	var creatures=GlobalPlayer.getCreatureList()
+	if creatures.is_empty():
+		var emptyLabel=Label.new()
+		emptyLabel.text=GlobalGame.getTraductionById(GlobalGame.TRAD_UI_NO_CREATURES)
+		emptyLabel.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		container.add_child(emptyLabel)
+		return
+	for i in range(creatures.size()):
+		var creature=creatures[i]
+		var activeMark="★ " if i==GlobalPlayer.activeCreatureIndex else ""
+		var button=Button.new()
+		button.text=activeMark+str(creature.get("name","Criatura"))+"  |  "+str(creature.get("type",""))+"  |  "+GlobalGame.getTraductionById(GlobalGame.TRAD_UI_LEVEL)+" "+str(creature.get("level",1))+"  |  "+GlobalGame.getTraductionById(GlobalGame.TRAD_UI_HP)+" "+str(creature.get("hp",0))+"/"+str(creature.get("max_hp",0))
+		button.pressed.connect(_on_creature_selected.bind(i))
+		container.add_child(button)
+
+func _on_creature_selected(index_):
+	GlobalPlayer.setActiveCreature(index_)
+	refreshCreatureCollection()
+
+func _on_btnCreatures_button_down():
+	btnBlock.visible=false
+	$creatureWindow.visible=true
+	refreshCreatureCollection()
+	$creatureWindow/list/closeButton.grab_focus()
+
+func _on_creatureClose_pressed():
+	$creatureWindow.visible=false
+	emitCloseMenu()
 
 func _on_btnSave_button_down():
 	emit_signal("save")
