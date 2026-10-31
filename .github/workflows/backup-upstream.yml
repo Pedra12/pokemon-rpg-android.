@@ -29,12 +29,16 @@ jobs:
       - name: Create a separate untouched source backup
         run: |
           mkdir -p original-source
-          git -C upstream archive 111c7479c907df33363d8e3ca23f39d0f71cb625 | tar -x -C original-source
+          rsync -a --delete --exclude='/.git/' upstream/ original-source/
           test -f original-source/project.godot
           test -f original-source/LICENSE
           test -f original-source/README.md
+          test -f original-source/export/AndroidFireTv/androidFireTv.apk
+          expected=$(git -C upstream ls-tree -r --name-only 111c7479c907df33363d8e3ca23f39d0f71cb625 | wc -l)
+          actual=$(find original-source -type f -o -type l | wc -l)
+          test "$actual" -eq "$((expected + 1))"
           echo "Upstream commit: 111c7479c907df33363d8e3ca23f39d0f71cb625" > original-source/UPSTREAM-REVISION.txt
-          echo "This directory is an untouched snapshot of the upstream source revision. Do not edit it; make development changes in a separate working copy." >> original-source/UPSTREAM-REVISION.txt
+          echo "This directory is an untouched working-tree snapshot of the upstream source revision. Do not edit it; make development changes in a separate working copy." >> original-source/UPSTREAM-REVISION.txt
 
       - name: Commit backup on a dedicated branch
         run: |
