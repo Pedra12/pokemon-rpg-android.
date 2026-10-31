@@ -279,7 +279,8 @@ var traducoesPT = {
 	TRAD_BEARVILLAGE_BEVILROOM_WIN:[
 		"Parabéns!",
 		"Muito obrigado pela sua ajuda!",
-		"Aqui estão 4 gemas como recompensa."
+		"Aqui estão 4 gemas como recompensa.",
+		"Uma Abelume decidiu se juntar a você!"
 	],
 	TRAD_TREEVILLAGE_STARFOUND:"Você encontrou uma Estrela de Gormon!"
 }
@@ -724,7 +725,8 @@ var traductionsList={
 		EN:[
 			"Congratulations,",
 			"Thanks a lot",
-			"I give to you 4 Gems"
+			"I give to you 4 Gems",
+			"An Abelume decided to join you!"
 		],
 
 	},
@@ -749,7 +751,8 @@ var traductionsList={
 		FR:[
 			"Bravo,",
 			"Un grand merci pour ton aide !",
-			"Pour te remercier, voici 4 Gems"
+			"Pour te remercier, voici 4 Gems",
+			"Une Abelume a décidé de vous accompagner !"
 		],
 		EN:[
 			"Congratulations,",
