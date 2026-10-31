@@ -108,9 +108,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -56.0
-offset_top = -60.0
+offset_top = -70.0
 offset_right = 56.0
-offset_bottom = 60.0
+offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3")
@@ -132,6 +132,10 @@ text = "Reprendre"
 [node name="btnInventory" type="Button" parent="btnBlock/list"]
 layout_mode = 2
 text = "Inventaire"
+
+[node name="btnCreatures" type="Button" parent="btnBlock/list"]
+layout_mode = 2
+text = "Criaturas"
 
 [node name="btnSave" type="Button" parent="btnBlock/list"]
 layout_mode = 2
@@ -251,6 +255,40 @@ theme_type_variation = &"DarkLabel"
 text = "Partie sauvegardée"
 horizontal_alignment = 1
 
+
+[node name="creatureWindow" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -68.0
+offset_right = 108.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3")
+
+[node name="list" type="VBoxContainer" parent="creatureWindow"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="title" type="Label" parent="creatureWindow/list"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Criaturas"
+horizontal_alignment = 1
+
+[node name="creatureList" type="VBoxContainer" parent="creatureWindow/list"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="closeButton" type="Button" parent="creatureWindow/list"]
+layout_mode = 2
+text = "Fechar"
+
 [node name="savedTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
@@ -261,6 +299,8 @@ one_shot = true
 [connection signal="useItem" from="inventoryList" to="." method="_on_inventoryList_useItem"]
 [connection signal="pressed" from="btnBlock/list/btnCancell" to="." method="_on_btnCancell_button_down"]
 [connection signal="pressed" from="btnBlock/list/btnInventory" to="." method="_on_btnInventory_button_down"]
+[connection signal="pressed" from="btnBlock/list/btnCreatures" to="." method="_on_btnCreatures_button_down"]
+[connection signal="pressed" from="creatureWindow/list/closeButton" to="." method="_on_creatureClose_pressed"]
 [connection signal="pressed" from="btnBlock/list/btnSave" to="." method="_on_btnSave_button_down"]
 [connection signal="pressed" from="btnBlock/list/btnParameters" to="." method="_on_btnParameters_button_down"]
 [connection signal="pressed" from="btnBlock/list/btnQuit" to="." method="_on_btnQuit_button_down"]
