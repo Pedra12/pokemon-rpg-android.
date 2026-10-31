@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GlobalPlayer="*res://common/singletons/globalPlayer.gd"
+GlobalCreatures="*res://common/singletons/globalCreatures.gd"
 GlobalGame="*res://common/singletons/globalGame.gd"
 GlobalItems="*res://common/singletons/globalItems.gd"
 GlobalScenes="*res://common/singletons/globalScenes.gd"
