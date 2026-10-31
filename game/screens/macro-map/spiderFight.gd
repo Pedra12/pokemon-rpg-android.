@@ -70,6 +70,10 @@ func _on_gamepad_attack(attack_):
 	$lifeSpider.updateValue(lifeSpider)
 	if roll.critical:
 		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CRITICAL))
+	elif multiplier>1.0:
+		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_SUPER_EFFECTIVE))
+	elif multiplier<1.0:
+		$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_NOT_EFFECTIVE))
 	await $spider1.damageFinished
 
 	if lifeSpider <= 0:
@@ -157,7 +161,7 @@ func _enemyTurn():
 			var nextCreature=GlobalPlayer.getActiveCreature()
 			$creature.setCreature(nextCreature)
 			$lifePlayer.init(str(nextCreature.get("name","Criatura")),int(nextCreature.get("hp",1)),int(nextCreature.get("max_hp",1)))
-			$gamepad.showMessage(str(nextCreature.get("name","Criatura"))+" entrou na batalha!")
+			$gamepad.showMessage(_trad(GlobalGame.TRAD_FIGHT_CREATURE_ENTERED) % str(nextCreature.get("name","Criatura")))
 			await _wait(MESSAGE_DELAY)
 			_playerTurn()
 		else:
