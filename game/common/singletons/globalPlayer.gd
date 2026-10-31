@@ -1,6 +1,6 @@
 extends Node
 
-var simpleFieldToSaveList=["gems","xp","life","maxLife","nickname","equipment","itemsList","side"]
+var simpleFieldToSaveList=["gems","xp","life","maxLife","nickname","equipment","itemsList","side","creatures","activeCreatureIndex"]
 var stringFieldList=["nickname"]
 var arrayFieldList=["itemsList"]
 var nullFieldList=["equipment"]
@@ -16,6 +16,9 @@ var nickname=null
 var equipment=null
 
 var side="DOWN"
+
+var creatures=[]
+var activeCreatureIndex=0
 
 var touchEnabled=true
 var dialogAnimationEnabled=true
@@ -160,6 +163,30 @@ func _addItem(itemId_):
 func getItemsList():
 	return itemsList
 
+#--- criaturas parceiras
+func addCreature(creature_):
+	if creature_ is Dictionary and !creature_.is_empty():
+		creatures.append(creature_.duplicate(true))
+
+func getCreatureList():
+	return creatures
+
+func getActiveCreature():
+	if creatures.is_empty():
+		return {}
+	activeCreatureIndex=clampi(activeCreatureIndex,0,creatures.size()-1)
+	return creatures[activeCreatureIndex]
+
+func setActiveCreature(index_):
+	if index_>=0 and index_<creatures.size():
+		activeCreatureIndex=index_
+
+func hasCreature(species_id_):
+	for creature in creatures:
+		if creature.get("species_id","")==species_id_:
+			return true
+	return false
+
 func countItem(itemId_):
 	return itemsList.count(itemId_)
 
@@ -188,7 +215,9 @@ func loadFromSave(data_):
 	for field in simpleFieldToSaveList:
 		if data_.has(field):
 			var valueMixed=data_[field]
-			if arrayFieldList.has(field):
+			if field=="creatures":
+				set(field,valueMixed)
+			elif arrayFieldList.has(field):
 				var intArray=[]
 				for valueMixedLoop in valueMixed:
 					intArray.append(int(valueMixedLoop))
