@@ -20,6 +20,7 @@ func _ready():
 	$shopList.setShopItemList([
 		shopItemClass.new(GlobalItems.ID.WOOD_SWORD,10),
 		shopItemClass.new(GlobalItems.ID.HEALTH_POTION_10,50),
+		shopItemClass.new(GlobalItems.ID.CAPTURE_ORB,25),
 	])
 
 func _on_door_playerOpenedDoor():
