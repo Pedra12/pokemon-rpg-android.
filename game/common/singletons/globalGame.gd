@@ -5,6 +5,7 @@ var _sceneToLoad=null
 
 const FR='FR'
 const EN='EN'
+const PT='PT'
 
 const TRAD_WORD_VENDEUR='Vendeur'
 const TRAD_WORD_HABITANT='Habitant'
@@ -104,6 +105,7 @@ const TRAD_FIGHT_DEFEAT='fight_defeat'
 const SETTINGS_FILE="user://settings.cfg"
 
 var lang=FR
+var traducoesPT = {TRAD_BUTTON_NEWGAME:'Novo jogo', TRAD_BUTTON_LOADGAME:'Carregar jogo', TRAD_BUTTON_CREATE:'Criar', TRAD_LABEL_NOM:'Nome', TRAD_LABEL_PSEUDO:'Apelido', TRAD_LABEL_PARTIES:'Jogos', TRAD_LABEL_VOTREPSEUDO:'Seu apelido', TRAD_BUTTON_RETOUR:'VOLTAR', TRAD_BUTTON_EFFACER:'APAGAR', TRAD_BUTTON_VALIDER:'CONFIRMAR', TRAD_LABEL_RETOURAUMENU:'VOLTAR AO MENU', TRAD_UI_PAUSE:'Pausa', TRAD_UI_RESUME:'Continuar', TRAD_UI_INVENTORY:'Inventário', TRAD_UI_SAVE:'Salvar', TRAD_UI_SETTINGS:'Configurações', TRAD_UI_QUIT:'Sair', TRAD_UI_QUIT_CONFIRM:'Deseja sair do jogo?', TRAD_UI_QUIT_WARNING:'Lembre-se de salvar!', TRAD_UI_YES:'Sim', TRAD_UI_NO:'Não', TRAD_UI_SAVED:'Jogo salvo', TRAD_UI_TOUCH:'Controles de toque', TRAD_UI_DIALOG_ANIMATION:'Texto animado', TRAD_UI_CLOSE:'Fechar', TRAD_UI_MENU:'Menu', TRAD_UI_SHOP:'Loja', TRAD_UI_EQUIP:'Equipar', TRAD_UI_DISPLAY:'Exibir', TRAD_UI_USE:'Usar', TRAD_UI_BUY:'Comprar', TRAD_UI_OWNED:'Já possui', TRAD_UI_LANGUAGE:'Idioma: Português (Brasil)', TRAD_FIGHT_ATTACK:'Atacar', TRAD_FIGHT_POTION:'Poção x%d', TRAD_FIGHT_FLEE:'Fugir', TRAD_FIGHT_BACK:'Voltar', TRAD_FIGHT_PUNCH:'Soco', TRAD_FIGHT_SPIDER:'Aranha', TRAD_FIGHT_APPEAR:'Uma aranha apareceu!', TRAD_FIGHT_CHOOSE:'O que %s vai fazer?', TRAD_FIGHT_PLAYER_ATTACK:'%s usa %s!', TRAD_FIGHT_CRITICAL:'Golpe crítico!', TRAD_FIGHT_ENEMY_ATTACK:'A aranha atacou!', TRAD_FIGHT_ENEMY_MISS:'A aranha errou o ataque!', TRAD_FIGHT_MISS:'Errou', TRAD_FIGHT_POTION_USED:'%s usou uma poção.', TRAD_FIGHT_FLEE_OK:'Você conseguiu fugir!', TRAD_FIGHT_FLEE_FAIL:'Não foi possível fugir!', TRAD_FIGHT_VICTORY:'Vitória! +%d XP  +%d gemas', TRAD_FIGHT_DEFEAT:'%s está exausto e recuou...', TRAD_WORD_PRESENTATEUR:'Apresentador', TRAD_WORD_APICULTEUR:'Apicultor', TRAD_WORD_VENDEUR:'Vendedor', TRAD_WORD_GORDONMOM:'Mãe do Gordon', TRAD_WORD_ARTISAN:'Artesão', TRAD_WORD_HABITANT:'Morador', TRAD_TREEVILLAGE_STARFOUND:'Uma estrela de Gormon encontrada!'}
 
 var traductionsList={
 
@@ -595,19 +597,22 @@ func chooseLang(lang_):
 # langue enregistrée, sinon celle du système (anglais si elle n'est pas gérée)
 func loadLang():
 	var settings=ConfigFile.new()
-	var defaultLang=FR if OS.get_locale_language()=="fr" else EN
+	var locale=OS.get_locale_language()
+	var defaultLang=PT if locale=="pt" else (FR if locale=="fr" else EN)
 	if settings.load(SETTINGS_FILE)==OK:
 		setLang(settings.get_value("game","lang",defaultLang))
 	else:
 		setLang(defaultLang)
 
 func toggleLang():
-	chooseLang(EN if lang==FR else FR)
+	chooseLang(EN if lang==FR else (PT if lang==EN else FR))
 
 func getLang():
 	return lang
 	
 func getTraductionById(id_):
+	if lang==PT:
+		return traducoesPT.get(id_, traductionsList[id_][EN])
 	return traductionsList[id_][lang]
 
 func getSceneToLoad():
