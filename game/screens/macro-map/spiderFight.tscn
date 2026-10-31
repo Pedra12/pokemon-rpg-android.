@@ -46,4 +46,5 @@ offset_bottom = 30.0
 
 [connection signal="attack" from="gamepad" to="." method="_on_gamepad_attack"]
 [connection signal="usePotion" from="gamepad" to="." method="_on_gamepad_usePotion"]
+[connection signal="capture" from="gamepad" to="." method="_on_gamepad_capture"]
 [connection signal="leave" from="gamepad" to="." method="_on_gamepad_leave"]
