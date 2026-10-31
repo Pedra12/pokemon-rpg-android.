@@ -21,7 +21,8 @@ enum ID {
 
 	HONEY,
 
-	BUCKET
+	BUCKET,
+	CAPTURE_ORB
 	
 	}
 
@@ -98,7 +99,13 @@ var itemList={
 		"common/items/things/bucket.png",
 		itemClass.TYPE.THING
 	)
-}
+,
+	ID.CAPTURE_ORB:itemClass.new(
+		"Esfera de captura",
+		"Uma esfera usada para capturar criaturas selvagens.",
+		"common/items/tools/capture-orb.svg",
+		itemClass.TYPE.THING
+	)}
 
 func getItem(key_):
 	var item=itemList[int(key_)]
