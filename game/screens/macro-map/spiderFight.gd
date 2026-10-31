@@ -24,14 +24,11 @@ var lifeSpider=SPIDER_MAX_LIFE
 var positionToGoUp
 var positionToGoDown
 
-var playerSavedLife=0
-
 var rng=RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
 
-	playerSavedLife=GlobalPlayer.getLife()
 	var activeCreature=GlobalPlayer.getActiveCreature()
 	if activeCreature.is_empty():
 		activeCreature=GlobalCreatures.createCreature("caranguito")
@@ -192,7 +189,6 @@ func _defeat():
 	await _wait(MESSAGE_DELAY*2)
 	# defaite : comme dans la salle des BeVil, on recupere la vie d'avant le combat
 	# et on recule sur la carte
-	var activeCreature=GlobalPlayer.getActiveCreature()
 	if !activeCreature.is_empty() and int(activeCreature.get("hp",0))<=0:
 		GlobalPlayer.healActiveCreature(1)
 	_gotoMap(false)
