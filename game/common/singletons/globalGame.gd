@@ -60,6 +60,11 @@ const TRAD_LABEL_RETOURAUMENU='label_retouraumenu'
 const TRAD_UI_PAUSE='ui_pause'
 const TRAD_UI_RESUME='ui_resume'
 const TRAD_UI_INVENTORY='ui_inventory'
+const TRAD_UI_CREATURES='ui_creatures'
+const TRAD_UI_NO_CREATURES='ui_no_creatures'
+const TRAD_UI_LEVEL='ui_level'
+const TRAD_UI_HP='ui_hp'
+const TRAD_UI_ACTIVE='ui_active'
 const TRAD_UI_SAVE='ui_save'
 const TRAD_UI_SETTINGS='ui_settings'
 const TRAD_UI_QUIT='ui_quit'
@@ -124,6 +129,11 @@ var traducoesPT = {
 	TRAD_UI_PAUSE:"Pausa",
 	TRAD_UI_RESUME:"Continuar",
 	TRAD_UI_INVENTORY:"Inventário",
+	TRAD_UI_CREATURES:"Criaturas",
+	TRAD_UI_NO_CREATURES:"Você ainda não tem criaturas.",
+	TRAD_UI_LEVEL:"Nível",
+	TRAD_UI_HP:"Vida",
+	TRAD_UI_ACTIVE:"Ativa",
 	TRAD_UI_SAVE:"Salvar",
 	TRAD_UI_SETTINGS:"Configurações",
 	TRAD_UI_QUIT:"Sair",
@@ -321,6 +331,11 @@ var traductionsList={
 	TRAD_UI_PAUSE:{FR:'Pause',EN:'Pause'},
 	TRAD_UI_RESUME:{FR:'Reprendre',EN:'Resume'},
 	TRAD_UI_INVENTORY:{FR:'Inventaire',EN:'Inventory'},
+	TRAD_UI_CREATURES:{FR:'Créatures',EN:'Creatures'},
+	TRAD_UI_NO_CREATURES:{FR:'Vous n’avez pas encore de créatures.',EN:'You do not have any creatures yet.'},
+	TRAD_UI_LEVEL:{FR:'Niveau',EN:'Level'},
+	TRAD_UI_HP:{FR:'Vie',EN:'HP'},
+	TRAD_UI_ACTIVE:{FR:'Active',EN:'Active'},
 	TRAD_UI_SAVE:{FR:'Sauvegarder',EN:'Save'},
 	TRAD_UI_SETTINGS:{FR:'Paramètres',EN:'Settings'},
 	TRAD_UI_QUIT:{FR:'Quitter',EN:'Quit'},
