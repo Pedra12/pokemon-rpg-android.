@@ -10,7 +10,7 @@ const SPECIES = {
 		"defense": 5,
 		"sprite": "res://screens/crabs-village/game3-room/assets/character/crab-walking-down.png",
 		"description": "Um pequeno crustáceo corajoso que protege seu parceiro.",
-		"frame_width": 32, "frame_height": 32, "frame_count": 3,
+		"frame_width": 32, "frame_height": 32, "frame_count": 3, "display_scale": 1.5,
 		"moves": [{"name":"Jato d’água","damage":11,"xp_min":0},{"name":"Pinça veloz","damage":15,"xp_min":5}]
 	},
 	"abelume": {
@@ -32,7 +32,7 @@ const SPECIES = {
 		"defense": 4,
 		"sprite": "res://common/fighters/spider1/enemy1-idle.png",
 		"description": "Uma aranha selvagem que pode se tornar uma aliada.",
-		"frame_width": 64, "frame_height": 64, "frame_count": 4,
+		"frame_width": 64, "frame_height": 64, "frame_count": 4, "display_scale": 0.9,
 		"moves": [{"name":"Mordida","damage":11,"xp_min":0},{"name":"Jato de teia","damage":15,"xp_min":5}]
 	},
 	"ursolino": {
@@ -43,7 +43,7 @@ const SPECIES = {
 		"defense": 8,
 		"sprite": "res://screens/bear-village/assets/bear/bear-idle.png",
 		"description": "Um pequeno urso resistente e muito leal.",
-		"frame_width": 32, "frame_height": 32, "frame_count": 5,
+		"frame_width": 32, "frame_height": 32, "frame_count": 5, "display_scale": 1.5,
 		"moves": [{"name":"Pancada","damage":10,"xp_min":0},{"name":"Investida","damage":16,"xp_min":5}]
 	}
 }
@@ -68,7 +68,8 @@ func createCreature(species_id_:String, level_:int=1) -> Dictionary:
 		"description": species.description,
 		"frame_width": int(species.frame_width),
 		"frame_height": int(species.frame_height),
-		"frame_count": int(species.frame_count)
+		"frame_count": int(species.frame_count),
+		"display_scale": float(species.display_scale)
 	}
 
 func getMoves(species_id_:String) -> Array:
