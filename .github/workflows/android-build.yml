@@ -35,7 +35,7 @@ jobs:
       - name: Install Android SDK packages
         run: |
           sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.1" "cmdline-tools;latest" "ndk;28.1.13356709" "cmake;3.10.2.4988404"
-          yes | sdkmanager --licenses
+          yes | sdkmanager --licenses || true
 
       - name: Install Godot 4.7.2 and matching export templates
         uses: chickensoft-games/setup-godot@v2.4.3
@@ -56,7 +56,7 @@ jobs:
           export/android/java_sdk_path = "$JAVA_HOME"
           EOF
           keytool -genkeypair -v -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-          cat > export_presets.cfg <<'EOF'
+          cat > export_presets.cfg <<EOF
           [preset.0]
           name="Android"
           platform="Android"
@@ -96,7 +96,7 @@ jobs:
           package/name="Little Adventure"
           package/signed=true
           screen/immersive_mode=true
-          screen/orientation=1
+          screen/orientation=0
           EOF
 
       - name: Import and validate original project
