@@ -1,0 +1,57 @@
+name: Backup exact Little Adventure source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download exact upstream revision
+        run: |
+          git clone --filter=blob:none https://github.com/imikado/dupotLittleAdventure.git upstream
+          git -C upstream checkout 111c7479c907df33363d8e3ca23f39d0f71cb625
+          test -f upstream/project.godot
+          test -f upstream/LICENSE
+          test -f upstream/README.md
+
+      - name: Create a separate untouched source backup
+        run: |
+          mkdir -p original-source
+          git -C upstream archive 111c7479c907df33363d8e3ca23f39d0f71cb625 | tar -x -C original-source
+          test -f original-source/project.godot
+          test -f original-source/LICENSE
+          test -f original-source/README.md
+          echo "Upstream commit: 111c7479c907df33363d8e3ca23f39d0f71cb625" > original-source/UPSTREAM-REVISION.txt
+          echo "This directory is an untouched snapshot of the upstream source revision. Do not edit it; make development changes in a separate working copy." >> original-source/UPSTREAM-REVISION.txt
+
+      - name: Commit backup on a dedicated branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C backup/little-adventure-111c747
+          git add original-source
+          git commit -m "Back up untouched Little Adventure source 111c747"
+          git push --force-with-lease origin backup/little-adventure-111c747
+
+      - name: Package source snapshot
+        run: |
+          tar -czf LittleAdventure-source-111c747.tar.gz original-source
+          sha256sum LittleAdventure-source-111c747.tar.gz
+
+      - name: Upload source archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: LittleAdventure-source-111c747
+          path: LittleAdventure-source-111c747.tar.gz
+          if-no-files-found: error
+          retention-days: 90
