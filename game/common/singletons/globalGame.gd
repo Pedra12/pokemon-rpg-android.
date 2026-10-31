@@ -83,6 +83,10 @@ const TRAD_UI_LANGUAGE='ui_language'
 const TRAD_FIGHT_ATTACK='fight_attack'
 const TRAD_FIGHT_POTION='fight_potion'
 const TRAD_FIGHT_FLEE='fight_flee'
+const TRAD_FIGHT_CAPTURE='fight_capture'
+const TRAD_FIGHT_CAPTURE_WEAK='fight_capture_weak'
+const TRAD_FIGHT_CAPTURED='fight_captured'
+const TRAD_FIGHT_CAPTURE_FAILED='fight_capture_failed'
 const TRAD_FIGHT_BACK='fight_back'
 const TRAD_FIGHT_PUNCH='fight_punch'
 const TRAD_FIGHT_SPIDER='fight_spider'
@@ -142,6 +146,10 @@ var traducoesPT = {
 	TRAD_FIGHT_ATTACK:"Atacar",
 	TRAD_FIGHT_POTION:"Poção x%d",
 	TRAD_FIGHT_FLEE:"Fugir",
+	TRAD_FIGHT_CAPTURE:"Capturar",
+	TRAD_FIGHT_CAPTURE_WEAK:"A criatura ainda está forte. Enfraqueça-a antes de tentar capturá-la.",
+	TRAD_FIGHT_CAPTURED:"%s foi capturado!",
+	TRAD_FIGHT_CAPTURE_FAILED:"A criatura escapou da esfera!",
 	TRAD_FIGHT_BACK:"Voltar",
 	TRAD_FIGHT_PUNCH:"Soco",
 	TRAD_FIGHT_SPIDER:"Aranha",
@@ -336,6 +344,10 @@ var traductionsList={
 	TRAD_FIGHT_ATTACK:{FR:'Attaquer',EN:'Attack'},
 	TRAD_FIGHT_POTION:{FR:'Potion x%d',EN:'Potion x%d'},
 	TRAD_FIGHT_FLEE:{FR:'Fuir',EN:'Flee'},
+	TRAD_FIGHT_CAPTURE:{FR:'Capturer',EN:'Capture'},
+	TRAD_FIGHT_CAPTURE_WEAK:{FR:'La créature est encore trop forte. Affaiblissez-la avant de tenter de la capturer.',EN:'The creature is still too strong. Weaken it before trying to capture it.'},
+	TRAD_FIGHT_CAPTURED:{FR:'%s a été capturée !',EN:'%s was captured!'},
+	TRAD_FIGHT_CAPTURE_FAILED:{FR:'La créature s’est échappée de la sphère !',EN:'The creature escaped the orb!'},
 	TRAD_FIGHT_BACK:{FR:'Retour',EN:'Back'},
 	TRAD_FIGHT_PUNCH:{FR:'Coup de poing',EN:'Punch'},
 	TRAD_FIGHT_SPIDER:{FR:'Araignée',EN:'Spider'},
