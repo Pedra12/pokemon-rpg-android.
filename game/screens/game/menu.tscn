@@ -89,6 +89,14 @@ offset_right = 314.405
 offset_bottom = 20.3326
 text = "EN"
 
+[node name="btnPT" type="Button" parent="lang" unique_id=1469439264]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 3.33258
+offset_right = 258.0
+offset_bottom = 20.3326
+text = "PT"
+
 [node name="version" type="Label" parent="." unique_id=53046992]
 layout_mode = 0
 offset_left = 233.652
@@ -104,3 +112,4 @@ horizontal_alignment = 2
 [connection signal="fillField" from="CanvasLayer/keyboard" to="." method="_on_keyboard_fillField"]
 [connection signal="button_down" from="lang/btnFR" to="." method="_on_btnFR_button_down"]
 [connection signal="button_down" from="lang/btnEN" to="." method="_on_btnEN_button_down"]
+[connection signal="button_down" from="lang/btnPT" to="." method="_on_btnPT_button_down"]
