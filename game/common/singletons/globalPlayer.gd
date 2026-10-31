@@ -204,6 +204,19 @@ func getNextHealthyCreatureIndex():
 			return index
 	return -1
 
+func addCreatureXp(amount_):
+	var creature=getActiveCreature()
+	if creature.is_empty():
+		return
+	creature["xp"]=int(creature.get("xp",0))+amount_
+	while int(creature["xp"]) >= int(creature.get("level",1))*10:
+		creature["xp"]-=int(creature.get("level",1))*10
+		creature["level"]=int(creature.get("level",1))+1
+		creature["max_hp"]=int(creature.get("max_hp",1))+4
+		creature["attack"]=int(creature.get("attack",1))+2
+		creature["hp"]=creature["max_hp"]
+	creatures[activeCreatureIndex]=creature
+
 func hasCreature(species_id_):
 	for creature in creatures:
 		if creature.get("species_id","")==species_id_:
