@@ -92,6 +92,9 @@ const TRAD_FIGHT_CAPTURE='fight_capture'
 const TRAD_FIGHT_CAPTURE_WEAK='fight_capture_weak'
 const TRAD_FIGHT_CAPTURED='fight_captured'
 const TRAD_FIGHT_CAPTURE_FAILED='fight_capture_failed'
+const TRAD_FIGHT_SUPER_EFFECTIVE='fight_super_effective'
+const TRAD_FIGHT_NOT_EFFECTIVE='fight_not_effective'
+const TRAD_FIGHT_CREATURE_ENTERED='fight_creature_entered'
 const TRAD_FIGHT_BACK='fight_back'
 const TRAD_FIGHT_PUNCH='fight_punch'
 const TRAD_FIGHT_SPIDER='fight_spider'
@@ -160,6 +163,9 @@ var traducoesPT = {
 	TRAD_FIGHT_CAPTURE_WEAK:"A criatura ainda está forte. Enfraqueça-a antes de tentar capturá-la.",
 	TRAD_FIGHT_CAPTURED:"%s foi capturado!",
 	TRAD_FIGHT_CAPTURE_FAILED:"A criatura escapou da esfera!",
+	TRAD_FIGHT_SUPER_EFFECTIVE:"Foi super eficaz!",
+	TRAD_FIGHT_NOT_EFFECTIVE:"Não foi muito eficaz...",
+	TRAD_FIGHT_CREATURE_ENTERED:"%s entrou na batalha!",
 	TRAD_FIGHT_BACK:"Voltar",
 	TRAD_FIGHT_PUNCH:"Soco",
 	TRAD_FIGHT_SPIDER:"Aranha",
@@ -363,6 +369,9 @@ var traductionsList={
 	TRAD_FIGHT_CAPTURE_WEAK:{FR:'La créature est encore trop forte. Affaiblissez-la avant de tenter de la capturer.',EN:'The creature is still too strong. Weaken it before trying to capture it.'},
 	TRAD_FIGHT_CAPTURED:{FR:'%s a été capturée !',EN:'%s was captured!'},
 	TRAD_FIGHT_CAPTURE_FAILED:{FR:'La créature s’est échappée de la sphère !',EN:'The creature escaped the orb!'},
+	TRAD_FIGHT_SUPER_EFFECTIVE:{FR:'C’est super efficace !',EN:'It’s super effective!'},
+	TRAD_FIGHT_NOT_EFFECTIVE:{FR:'Ce n’est pas très efficace...',EN:'It’s not very effective...'},
+	TRAD_FIGHT_CREATURE_ENTERED:{FR:'%s entre dans le combat !',EN:'%s joined the battle!'},
 	TRAD_FIGHT_BACK:{FR:'Retour',EN:'Back'},
 	TRAD_FIGHT_PUNCH:{FR:'Coup de poing',EN:'Punch'},
 	TRAD_FIGHT_SPIDER:{FR:'Araignée',EN:'Spider'},
